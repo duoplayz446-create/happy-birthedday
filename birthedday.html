@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To The Best Mumma ❤️</title>
+    <!-- Canvas Confetti & FontAwesome Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --primary-glow: rgba(255, 77, 109, 0.5);
+            --bg-gradient: linear-gradient(135deg, #0f0c1b 0%, #20132e 50%, #0f0c1b 100%);
+            --glass: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* Ambient Glow Background */
+        .ambient-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            filter: blur(150px);
+            border-radius: 50%;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 1;
+            animation: pulseGlow 8s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(-20px, -20px); }
+            100% { transform: scale(1.3) translate(20px, 20px); }
+        }
+
+        /* Glassmorphic Container */
+        .page {
+            display: none;
+            width: 90%;
+            max-width: 450px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            text-align: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            position: relative;
+            z-index: 10;
+        }
+
+        .active {
+            display: block;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1, h2 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #ff85a1, #ff4d6d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #cbc6d3;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* 2026 Cinematic Neon Button */
+        .btn {
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px #ff4d6d;
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Page 2: Modern Flat 3D Cake */
+        .cake-wrapper {
+            margin: 40px auto;
+            width: 140px;
+            height: 140px;
+            position: relative;
+            cursor: pointer;
+        }
+        .modern-cake {
+            position: absolute;
+            bottom: 0;
+            width: 140px;
+            height: 70px;
+            background: linear-gradient(180deg, #ff85a1 0%, #ff4d6d 100%);
+            border-radius: 16px 16px 4px 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .modern-cake::before {
+            content: '';
+            position: absolute;
+            top: 15px; width: 100%; height: 12px;
+            background: rgba(255,255,255,0.3);
+        }
+        .modern-candle {
+            position: absolute;
+            top: 30px; left: 64px;
+            width: 12px; height: 45px;
+            background: linear-gradient(to right, #4ea8de, #56cfe1);
+            border-radius: 4px;
+        }
+        .modern-flame {
+            position: absolute;
+            top: -18px; left: -2px;
+            width: 16px; height: 22px;
+            background: #ffb703;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 25px #ffb703, 0 0 10px #ffb703;
+            animation: floatingFlame 0.6s infinite alternate ease-in-out;
+        }
+        @keyframes floatingFlame {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-3px) scale(1.1); }
+        }
+
+        /* Page 3: Cyber Typewriter Text */
+        .neon-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.05);
+            min-height: 120px;
+            text-align: left;
+        }
+        .typewriter-text {
+            font-size: 16px;
+            color: #e2e0e5;
+            line-height: 1.7;
+        }
+
+        /* Page 4: Modern Image Card */
+        .image-frame {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+        }
+        .slider-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .image-frame:hover .slider-img {
+            transform: scale(1.05);
+        }
+
+        /* Page 5: Sleek Minimalist Cards */
+        .reason-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .reason-card:hover {
+            background: rgba(255, 77, 109, 0.1);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+        .reason-card i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        /* Page 6: Premium Gift Experience */
+        .gift-box-vector {
+            font-size: 90px;
+            margin: 30px 0;
+            animation: bounceGift 1s infinite alternate cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            filter: drop-shadow(0 10px 20px var(--primary-glow));
+        }
+        @keyframes bounceGift {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-15px) rotate(5deg); }
+        }
+        .final-card {
+            display: none;
+            background: rgba(255, 77, 109, 0.05);
+            border: 1px solid rgba(255, 77, 109, 0.2);
+            padding: 25px 20px;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        /* Floating particles behind */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: floatParticle 10s infinite linear;
+            color: var(--primary);
+            z-index: 2;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(105vh) translateX(0) rotate(0deg); }
+            100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+    <div id="particles-container"></div>
+    <audio id="bg-music" src="background-music.mp3" loop></audio>
+
+    <!-- PAGE 1 -->
+    <div id="page1" class="page active">
+        <div style="font-size: 50px; margin-bottom: 15px;">🎉</div>
+        <h1>Happy Birthday,<br>Mumma ❤️</h1>
+        <p>Aapke liye 2026 special AI surprise ready hai. Start karke dekhiye... ✨</p>
+        <button class="btn" onclick="startSurprise()">
+            <span>Start Surprise</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </button>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2" class="page">
+        <h2>Make a Wish... 💖</h2>
+        <p>Candle par tap karke magic dekhiye!</p>
+        <div class="cake-wrapper" onclick="blowCandle()">
+            <div class="modern-cake"></div>
+            <div class="modern-candle"><div class="modern-flame" id="candle-flame"></div></div>
+        </div>
+        <button class="btn" id="next2" style="display:none;" onclick="nextPage(3)">
+            <span>Next Step</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3" class="page">
+        <h2><i class="fa-solid fa-envelope-open-text"></i> Message For You</h2>
+        <div class="neon-box">
+            <div class="typewriter-text" id="typewriter"></div>
+        </div>
+        <button class="btn" id="next3" style="display:none; margin-top:25px;" onclick="nextPage(4)">
+            <span>Continue</span> <i class="fa-solid fa-heart"></i>
+        </button>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div id="page4" class="page">
+        <h2><i class="fa-solid fa-images"></i> Memories</h2>
+        <div class="image-frame">
+            <!-- CodePen check ke liye placeholder image hai, tum apni pic dalna -->
+            <img id="slider-image" class="slider-img" src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500" alt="Memory">
+        </div>
+        <p id="slider-caption" style="font-style: italic; font-size: 15px;">Mumma ki sabse pyaari smile! 😊</p>
+        <button class="btn" onclick="nextMemory()">
+            <span>Next Photo</span> <i class="fa-solid fa-camera"></i>
+        </button>
+    </div>
+
+    <!-- PAGE 5 -->
+    <div id="page5" class="page">
+        <h2><i class="fa-solid fa-sparkles"></i> Why I Love You</h2>
+        <p>Inhe mehsoos karke dekhiye:</p>
+        <div class="reason-card"><i class="fa-solid fa-face-smile-beam"></i> <span>Your Beautiful Smile</span></div>
+        <div class="reason-card"><i class="fa-solid fa-hand-holding-heart"></i> <span>Your Unconditional Caring Nature</span></div>
+        <div class="reason-card"><i class="fa-solid fa-brain"></i> <span>The Way You Understand Me Instantly</span></div>
+        <div class="reason-card"><i class="fa-solid fa-crown"></i> <span>Because You're My World, My Mumma</span></div>
+        <button class="btn" style="margin-top:20px;" onclick="nextPage(6)">
+            <span>Final Gift</span> <i class="fa-solid fa-gift"></i>
+        </button>
+    </div>
+
+    <!-- PAGE 6 -->
+    <div id="page6" class="page">
+        <h2>🎁 Grand Finale</h2>
+        <div class="gift-box-vector" id="gift" onclick="openGift()">🎁</div>
+        <button class="btn" id="gift-btn" onclick="openGift()">Open Gift Box</button>
+        
+        <div class="final-card" id="final-msg">
+            <h3 style="color: #ff4d6d; margin-bottom: 15px; font-size: 22px;">Happy Birthday, Mumma ❤️</h3>
+            <p style="font-size: 15px; color: #e2e0e5;">You are the most beautiful part of my life. No matter where life takes us, you'll always have a special place in my heart. I wish you endless happiness, smiles, and love. 💖</p>
+            <h3 style="color: #ff4d6d; font-size: 20px; margin-top: 15px; font-weight: 700;">❤️ I Love You Forever ❤️</h3>
+        </div>
+    </div>
+
+    <script>
+        const music = document.getElementById('bg-music');
+
+        // Create 2026 Minimal Floating Hearts/Stars Particles
+        function generateParticles() {
+            const container = document.getElementById('particles-container');
+            const icons = ['❤️', '✨', '🌸'];
+            for(let i=0; i<20; i++) {
+                let p = document.createElement('div');
+                p.classList.add('particle');
+                p.innerText = icons[Math.floor(Math.random() * icons.length)];
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.fontSize = (Math.random() * 15 + 12) + 'px';
+                p.style.animationDelay = Math.random() * 8 + 's';
+                p.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                container.appendChild(p);
+            }
+        }
+        generateParticles();
+
+        function nextPage(pageNum) {
+            document.querySelector('.active').classList.remove('active');
+            document.getElementById('page' + pageNum).classList.add('active');
+            if(pageNum === 3) startTypewriter();
+        }
+
+        function startSurprise() {
+            music.play().catch(e => console.log("Audio activation deferred"));
+            nextPage(2);
+        }
+
+        function blowCandle() {
+            document.getElementById('candle-flame').style.animation = 'none';
+            document.getElementById('candle-flame').style.display = 'none';
+            confetti({ particleCount: 140, spread: 80, origin: { y: 0.6 }, colors: ['#ff4d6d', '#ff85a1', '#ffffff'] });
+            document.getElementById('next2').style.display = 'inline-flex';
+        }
+
+        const txt = "Happy Birthday, Mumma ❤️\n\nAaj ka din sirf tumhare liye hai. Thank you meri life me aane ke liye. Main hamesha tumhari smile ki wajah banna chahta hoon. 💖";
+        let idx = 0;
+        function startTypewriter() {
+            if (idx < txt.length) {
+                let char = txt.charAt(idx);
+                document.getElementById("typewriter").innerHTML += char === '\n' ? '<br>' : char;
+                idx++;
+                setTimeout(startTypewriter, 40);
+            } else {
+                document.getElementById('next3').style.display = 'inline-flex';
+            }
+        }
+
+        const memories = [
+            { src: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500', cap: "Mumma ki sabse pyaari smile! 😊" },
+            { src: 'photo2.jpg', cap: "Hamesha sabse supportive aur sabse best guide! ❤️" },
+            { src: 'photo3.jpg', cap: "Meri har khushi aap se hi hai 🌸" }
+        ];
+        let memIdx = 0;
+        function nextMemory() {
+            memIdx++;
+            if(memIdx < memories.length) {
+                document.getElementById('slider-image').src = memories[memIdx].src;
+                document.getElementById('slider-caption').innerText = memories[memIdx].cap;
+            } else {
+                nextPage(5);
+            }
+        }
+
+        function openGift() {
+            document.getElementById('gift').style.animation = 'none';
+            document.getElementById('gift').innerHTML = '💥';
+            setTimeout(() => { document.getElementById('gift').style.display = 'none'; }, 300);
+            document.getElementById('gift-btn').style.display = 'none';
+            document.getElementById('final-msg').style.display = 'block';
+            
+            let duration = 4 * 1000;
+            let end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff4d6d', '#ffffff'] });
+                confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff4d6d', '#ffffff'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+    </script>
+</body>
+</html>
